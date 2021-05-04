@@ -13,7 +13,9 @@ import {model, property, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
+  HttpErrors,
   post,
+  put,
   requestBody,
   SchemaObject,
 } from '@loopback/rest';
@@ -63,7 +65,7 @@ export class UserController {
     @repository(UserRepository) protected userRepository: UserRepository,
   ) {}
 
-  @post('/users/login', {
+  @post('/login', {
     responses: {
       '200': {
         description: 'Token',

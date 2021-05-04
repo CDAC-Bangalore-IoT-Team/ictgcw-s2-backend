@@ -10,14 +10,6 @@ import {ServiceMixin} from '@loopback/service-proxy';
 import path from 'path';
 import {MySequence} from './sequence';
 
-import {AuthenticationComponent} from '@loopback/authentication';
-import {
-  JWTAuthenticationComponent,
-  SECURITY_SCHEME_SPEC,
-  UserServiceBindings,
-} from '@loopback/authentication-jwt';
-import {PostgresdbDataSource} from './datasources';
-
 export {ApplicationConfig};
 
 export class IctgcwS2BackendApplication extends BootMixin(
@@ -48,13 +40,5 @@ export class IctgcwS2BackendApplication extends BootMixin(
         nested: true,
       },
     };
-
-    // Mount authentication system
-    this.component(AuthenticationComponent);
-    // Mount jwt component
-    this.component(JWTAuthenticationComponent);
-    // Bind datasource
-    this.dataSource(PostgresdbDataSource, UserServiceBindings.DATASOURCE_NAME);
-
   }
 }
