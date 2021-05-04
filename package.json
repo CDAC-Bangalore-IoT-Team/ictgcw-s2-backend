@@ -1,6 +1,6 @@
 {
   "name": "ictgcw-s2-backend",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "ICTGCW Stage 2 dashboard backend server",
   "keywords": [
     "loopback-application",

@@ -66,6 +66,9 @@ export class UserController {
   ) {}
 
   @post('/login', {
+    tags: ['User'],
+    summary: 'Logs user into the system',
+    description: '',
     responses: {
       '200': {
         description: 'Token',
@@ -99,6 +102,9 @@ export class UserController {
 
   @authenticate('jwt')
   @get('/getuser', {
+    tags: ['User'],
+    summary: 'Gets the current user',
+    description: '',
     responses: {
       '200': {
         description: 'Return current user',
@@ -120,6 +126,9 @@ export class UserController {
   }
 
   @post('/signup', {
+    tags: ['User'],
+    summary: 'Signs up a new user',
+    description: '',
     responses: {
       '200': {
         description: 'User',

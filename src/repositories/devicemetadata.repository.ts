@@ -1,0 +1,19 @@
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
+import {PostgresdbDataSource} from '../datasources';
+import {
+  Devicemetadata,
+  DevicemetadataRelations,
+} from '../models/devicemetadata.model';
+
+export class DevicemetadataRepository extends DefaultCrudRepository<
+  Devicemetadata,
+  typeof Devicemetadata.prototype.deviceId,
+  DevicemetadataRelations
+> {
+  constructor(
+    @inject('datasources.postgresdb') dataSource: PostgresdbDataSource,
+  ) {
+    super(Devicemetadata, dataSource);
+  }
+}

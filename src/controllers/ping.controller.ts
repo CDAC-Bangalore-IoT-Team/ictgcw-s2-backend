@@ -38,7 +38,7 @@ const PING_RESPONSE: ResponseObject = {
 /**
  * A simple controller to bounce back http requests
  */
- @authenticate('jwt')
+@authenticate('jwt')
 export class PingController {
   constructor(@inject(RestBindings.Http.REQUEST) private req: Request) {}
 
