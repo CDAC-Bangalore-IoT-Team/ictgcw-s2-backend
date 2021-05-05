@@ -23,13 +23,8 @@ import {
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
-import { Sensordata } from '../models';
+import {Sensordata} from '../models';
 
-@api({
-  components: {
-    
-  }
-})
 @authenticate('jwt')
 export class DevicemetadataController {
   constructor(
@@ -39,10 +34,10 @@ export class DevicemetadataController {
 
   /**
    * Insert device meta data
-   * @param devicemetadata 
+   * @param devicemetadata
    * @returns devicemetadata
    */
-   @operation('post', '/insert/metadata', {
+  @post('/insert/metadata', {
     tags: ['Device metadata'],
     summary:
       'Insert the devices meta data into the system, based on the device ID',
@@ -50,7 +45,9 @@ export class DevicemetadataController {
     responses: {
       '200': {
         description: 'Inserted device meta data into the system',
-        content: {'application/json': {schema: getModelSchemaRef(Devicemetadata)}},
+        content: {
+          'application/json': {schema: getModelSchemaRef(Devicemetadata)},
+        },
         '400': {
           description: 'Not allowable input',
         },

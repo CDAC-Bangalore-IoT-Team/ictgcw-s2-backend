@@ -140,6 +140,15 @@ export class UserController {
           },
         },
       },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async signUp(
