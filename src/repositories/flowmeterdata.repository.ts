@@ -8,7 +8,7 @@ import {
 
 export class FlowmeterdataRepository extends DefaultCrudRepository<
   Flowmeterdata,
-  typeof Flowmeterdata.prototype.deviceId,
+  typeof Flowmeterdata.prototype.deviceid,
   FlowmeterdataRelations
 > {
   constructor(

@@ -8,7 +8,7 @@ import {
 
 export class DevicemetadataRepository extends DefaultCrudRepository<
   Devicemetadata,
-  typeof Devicemetadata.prototype.deviceId,
+  typeof Devicemetadata.prototype.deviceid,
   DevicemetadataRelations
 > {
   constructor(

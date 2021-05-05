@@ -146,9 +146,7 @@ export class UserController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(NewUserRequest, {
-            title: 'NewUser',
-          }),
+          schema: getModelSchemaRef(NewUserRequest),
         },
       },
     })

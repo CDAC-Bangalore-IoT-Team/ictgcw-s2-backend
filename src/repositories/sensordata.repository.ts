@@ -5,7 +5,7 @@ import {Sensordata, SensordataRelations} from '../models/sensordata.model';
 
 export class SensordataRepository extends DefaultCrudRepository<
   Sensordata,
-  typeof Sensordata.prototype.deviceId,
+  typeof Sensordata.prototype.deviceid,
   SensordataRelations
 > {
   constructor(

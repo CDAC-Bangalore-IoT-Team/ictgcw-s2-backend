@@ -5,20 +5,21 @@ export class Sensordata extends Entity {
   @property({
     type: 'string',
     id: true,
-    generated: true,
+    generated: false,
+    required: true,
   })
-  deviceId?: string;
+  deviceid?: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  deviceType: string;
+  devicetype: string;
 
   @property({
     type: 'string',
   })
-  gatewayId?: string;
+  gatewayid?: string;
 
   @property({
     type: 'string',
@@ -28,19 +29,19 @@ export class Sensordata extends Entity {
   @property({
     type: 'string',
   })
-  errorCode?: string;
+  errorcode?: string;
 
   @property({
-    type: 'any',
+    type: 'number',
     required: true,
   })
-  sensorValue: any;
+  sensorvalue: number;
 
   @property({
     type: 'date',
     required: true,
   })
-  dateTime: string;
+  datetime: string;
 
 
   constructor(data?: Partial<Sensordata>) {

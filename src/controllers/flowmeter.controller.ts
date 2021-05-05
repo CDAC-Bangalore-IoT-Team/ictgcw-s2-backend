@@ -16,29 +16,58 @@ import {
   del,
   requestBody,
   response,
+  api,
+  operation,
 } from '@loopback/rest';
 import { Flowmeterdata } from '../models/flowmeterdata.model';
 import { FlowmeterdataRepository } from '../repositories';
+import {authenticate} from '@loopback/authentication';
+import { Sensordata } from '../models';
 
+@api({
+  components: {
+    
+  }
+})
+@authenticate('jwt')
 export class FlowmeterController {
   constructor(
     @repository(FlowmeterdataRepository)
     public flowmeterdataRepository : FlowmeterdataRepository,
   ) {}
 
-  @post('/flowmeterdata')
-  @response(200, {
-    description: 'Flowmeterdata model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Flowmeterdata)}},
+  /**
+   * Insert bulk flow meter data
+   * @param flowmeterdata 
+   * @returns flowmeterdata
+   */
+   @operation('post', '/insert/bfm', {
+    tags: ['Flow meter Data'],
+    summary:
+      'Insert the bulk flow meter data into the system, based on the device ID',
+    operationId: 'insertbfm',
+    responses: {
+      '200': {
+        description: 'Inserted bulk flow meter data',
+        content: {'application/json': {schema: getModelSchemaRef(Flowmeterdata)}},
+        '400': {
+          description: 'Not allowable input',
+        },
+        '404': {
+          description: 'Page not found',
+        },
+        '500': {
+          description: 'Server error',
+        },
+      },
+      'x-swagger-router-controller': 'FlowmeterController',
+    },
   })
-  async create(
+  async insertbfm(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Flowmeterdata, {
-            title: 'NewFlowmeterdata',
-            
-          }),
+          schema: getModelSchemaRef(Flowmeterdata),
         },
       },
     })
@@ -47,7 +76,48 @@ export class FlowmeterController {
     return this.flowmeterdataRepository.create(flowmeterdata);
   }
 
-  @get('/flowmeterdata/count')
+  /**
+   * Insert consumer flow meter data
+   * @param flowmeterdata 
+   * @returns flowmeterdata
+   */
+   @operation('post', '/insert/cfm', {
+    tags: ['Flow meter Data'],
+    summary:
+      'Insert the consumer flow meter data into the system, based on the device ID',
+    operationId: 'insertcfm',
+    responses: {
+      '200': {
+        description: 'Inserted consumer flow meter data',
+        content: {'application/json': {schema: getModelSchemaRef(Flowmeterdata)}},
+        '400': {
+          description: 'Not allowable input',
+        },
+        '404': {
+          description: 'Page not found',
+        },
+        '500': {
+          description: 'Server error',
+        },
+      },
+      'x-swagger-router-controller': 'FlowmeterController',
+    },
+  })
+  async insertcfm(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Flowmeterdata),
+        },
+      },
+    })
+    flowmeterdata: Flowmeterdata,
+  ): Promise<Flowmeterdata> {
+    return this.flowmeterdataRepository.create(flowmeterdata);
+  }
+
+
+  /* @get('/flowmeterdata/count')
   @response(200, {
     description: 'Flowmeterdata model count',
     content: {'application/json': {schema: CountSchema}},
@@ -146,5 +216,5 @@ export class FlowmeterController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.flowmeterdataRepository.deleteById(id);
-  }
+  } */
 }

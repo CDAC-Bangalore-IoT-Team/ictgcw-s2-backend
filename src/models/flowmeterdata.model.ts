@@ -8,52 +8,51 @@ export class Flowmeterdata extends Entity {
     generated: false,
     required: true,
   })
-  deviceId: string;
+  deviceid: string;
 
   @property({
     type: 'string',
   })
-  gatewayId?: string;
+  gatewayid?: string;
+
+  @property({
+    type: 'string',
+  })
+  location?: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  location: string;
+  devicetype: string;
 
   @property({
-    type: 'string',
+    type: 'number',
     required: true,
   })
-  deviceType: string;
+  quantity:'number'
 
   @property({
-    type: 'any',
+    type: 'number',
     required: true,
   })
-  quantity: any;
-
-  @property({
-    type: 'any',
-    required: true,
-  })
-  flowrate: any;
-
-  @property({
-    type: 'any',
-  })
-  battery?: any;
+  flowrate:'number'
 
   @property({
     type: 'string',
   })
-  error?: string;
+  battery?: string;
+
+  @property({
+    type: 'string',
+  })
+  errorcode?: string;
 
   @property({
     type: 'date',
     required: true,
   })
-  dateTime: string;
+  datetime: string;
 
 
   constructor(data?: Partial<Flowmeterdata>) {

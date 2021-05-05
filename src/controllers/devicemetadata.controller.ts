@@ -17,11 +17,19 @@ import {
   requestBody,
   response,
   tags,
+  api,
+  operation,
 } from '@loopback/rest';
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
+import { Sensordata } from '../models';
 
+@api({
+  components: {
+    
+  }
+})
 @authenticate('jwt')
 export class DevicemetadataController {
   constructor(
@@ -29,13 +37,34 @@ export class DevicemetadataController {
     public devicemetadataRepository: DevicemetadataRepository,
   ) {}
 
-  @post('/devicemetadata')
-  @tags('Device meta data')
-  @response(200, {
-    description: 'Devicemetadata model instance inserted successfully',
-    content: {'application/json': {schema: getModelSchemaRef(Devicemetadata)}},
+  /**
+   * Insert device meta data
+   * @param devicemetadata 
+   * @returns devicemetadata
+   */
+   @operation('post', '/insert/metadata', {
+    tags: ['Device metadata'],
+    summary:
+      'Insert the devices meta data into the system, based on the device ID',
+    operationId: 'insertmetadata',
+    responses: {
+      '200': {
+        description: 'Inserted device meta data into the system',
+        content: {'application/json': {schema: getModelSchemaRef(Devicemetadata)}},
+        '400': {
+          description: 'Not allowable input',
+        },
+        '404': {
+          description: 'Page not found',
+        },
+        '500': {
+          description: 'Server error',
+        },
+      },
+      'x-swagger-router-controller': 'DevicemetadataController',
+    },
   })
-  async create(
+  async insertdevicemetadata(
     @requestBody({
       content: {
         'application/json': {
@@ -48,7 +77,7 @@ export class DevicemetadataController {
     return this.devicemetadataRepository.create(devicemetadata);
   }
 
-  @get('/devicemetadata/count')
+  /* @get('/devicemetadata/count')
   @tags('Device meta data')
   @response(200, {
     description: 'Devicemetadata model count',
@@ -154,5 +183,5 @@ export class DevicemetadataController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.devicemetadataRepository.deleteById(id);
-  }
+  } */
 }
