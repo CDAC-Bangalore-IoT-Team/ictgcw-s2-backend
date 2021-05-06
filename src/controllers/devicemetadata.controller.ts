@@ -19,11 +19,22 @@ import {
   tags,
   api,
   operation,
+  SchemaObject,
 } from '@loopback/rest';
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
 import {Sensordata} from '../models';
+
+const devicemetadataidschema: SchemaObject = {
+  type: 'object',
+  required: ['deviceid'],
+  properties: {
+    deviceid: {
+      type: 'string',
+    },
+  },
+};
 
 @authenticate('jwt')
 export class DevicemetadataController {
@@ -37,7 +48,7 @@ export class DevicemetadataController {
    * @param devicemetadata
    * @returns devicemetadata
    */
-   @post('/insert/metadata', {
+  @post('/insert/metadata', {
     tags: ['Device metadata'],
     summary: 'Insert device metadata into the system, with all fields required',
     description: '',
@@ -75,6 +86,109 @@ export class DevicemetadataController {
     devicemetadata: Devicemetadata,
   ): Promise<Devicemetadata> {
     return this.devicemetadataRepository.create(devicemetadata);
+  }
+
+  /**
+   * Get device meta data
+   * @param deviceid
+   * @returns devicemetadata
+   */
+  @get('/get/devicemetadata/{id}', {
+    tags: ['Device metadata'],
+    summary: 'Get device metadata from the system, through device ID',
+    description: '',
+    responses: {
+      '200': {
+        description: 'Devicemetadata model instance',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(Devicemetadata, {includeRelations: true}),
+          },
+        },
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async findById(
+    @param.path.string('id') id: string,
+    @param.filter(Devicemetadata, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Devicemetadata>,
+  ): Promise<Devicemetadata> {
+    return this.devicemetadataRepository.findById(id, filter);
+  }
+
+  /**
+   * Update device meta data
+   * @param deviceid
+   * @returns SUCCESS/FAILURE response
+   */
+  @patch('/update/devicemetadata/{id}', {
+    tags: ['Device metadata'],
+    summary: 'update device metadata from the system, through device ID',
+    description: '',
+    responses: {
+      '204': {
+        description: 'Devicemetadata PATCH success',
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Devicemetadata, {partial: true}),
+        },
+      },
+    })
+    devicemetadata: Devicemetadata,
+  ): Promise<void> {
+    await this.devicemetadataRepository.updateById(id, devicemetadata);
+  }
+
+  /**
+   * Delete device meta data
+   * @param deviceid
+   * @returns SUCCESS/FAILURE response
+   */
+  @del('/del/devicemetadata/{id}', {
+    tags: ['Device metadata'],
+    summary: 'Delete device metadata from the system, through device ID',
+    description: '',
+    responses: {
+      '204': {
+        description: 'Devicemetadata DELETE success',
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.devicemetadataRepository.deleteById(id);
   }
 
   /* @get('/devicemetadata/count')
@@ -145,24 +259,7 @@ export class DevicemetadataController {
     return this.devicemetadataRepository.findById(id, filter);
   }
 
-  @patch('/devicemetadata/{id}')
-  @tags('Device meta data')
-  @response(204, {
-    description: 'Devicemetadata PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Devicemetadata, {partial: true}),
-        },
-      },
-    })
-    devicemetadata: Devicemetadata,
-  ): Promise<void> {
-    await this.devicemetadataRepository.updateById(id, devicemetadata);
-  }
+  
 
   @put('/devicemetadata/{id}')
   @tags('Device meta data')
@@ -176,12 +273,5 @@ export class DevicemetadataController {
     await this.devicemetadataRepository.replaceById(id, devicemetadata);
   }
 
-  @del('/devicemetadata/{id}')
-  @tags('Device meta data')
-  @response(204, {
-    description: 'Devicemetadata DELETE success',
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.devicemetadataRepository.deleteById(id);
-  } */
+   */
 }
