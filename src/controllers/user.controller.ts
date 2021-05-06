@@ -3,9 +3,7 @@ import {
   Credentials,
   TokenServiceBindings,
   MyUserService,
-  User,
   UserServiceBindings,
-  UserRepository,
 } from '@loopback/authentication-jwt';
 import {TokenService, authenticate} from '@loopback/authentication';
 import {SecurityBindings, UserProfile, securityId} from '@loopback/security';
@@ -21,6 +19,8 @@ import {
 } from '@loopback/rest';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
+import { User } from '../models';
+import { UserRepository } from '../repositories';
 
 @model()
 export class NewUserRequest extends User {
@@ -33,7 +33,7 @@ export class NewUserRequest extends User {
 
 const CredentialsSchema: SchemaObject = {
   type: 'object',
-  required: ['email', 'password'],
+  required: ['emailid', 'password'],
   properties: {
     email: {
       type: 'string',

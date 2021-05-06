@@ -1,5 +1,5 @@
-import {inject} from '@loopback/core';
-import {DefaultCrudRepository} from '@loopback/repository';
+import {inject, Getter} from '@loopback/core';
+import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
 import {PostgresdbDataSource} from '../datasources';
 import {
   Devicemetadata,
@@ -11,6 +11,7 @@ export class DevicemetadataRepository extends DefaultCrudRepository<
   typeof Devicemetadata.prototype.deviceid,
   DevicemetadataRelations
 > {
+
   constructor(
     @inject('datasources.postgresdb') dataSource: PostgresdbDataSource,
   ) {

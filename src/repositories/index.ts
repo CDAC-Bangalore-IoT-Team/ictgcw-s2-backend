@@ -1,3 +1,3 @@
 export * from './devicemetadata.repository';
-export * from './flowmeterdata.repository';
-export * from './sensordata.repository';
+export * from './user-credentials.repository';
+export * from './user.repository';

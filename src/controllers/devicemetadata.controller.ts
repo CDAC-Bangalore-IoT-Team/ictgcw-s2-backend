@@ -1,10 +1,6 @@
 import {
-  Count,
-  CountSchema,
-  Filter,
   FilterExcludingWhere,
   repository,
-  Where,
 } from '@loopback/repository';
 import {
   post,
@@ -12,19 +8,13 @@ import {
   get,
   getModelSchemaRef,
   patch,
-  put,
   del,
   requestBody,
-  response,
-  tags,
-  api,
-  operation,
   SchemaObject,
 } from '@loopback/rest';
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
-import {Sensordata} from '../models';
 
 const devicemetadataidschema: SchemaObject = {
   type: 'object',

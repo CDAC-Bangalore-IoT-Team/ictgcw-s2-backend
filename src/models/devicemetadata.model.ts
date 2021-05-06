@@ -1,4 +1,4 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo} from '@loopback/repository';
 
 @model()
 export class Devicemetadata extends Entity {
@@ -87,7 +87,6 @@ export class Devicemetadata extends Entity {
     required: true,
   })
   dateofinstallation: string;
-
 
   constructor(data?: Partial<Devicemetadata>) {
     super(data);
