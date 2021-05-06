@@ -41,30 +41,34 @@ export class FlowmeterController {
    * @param flowmeterdata 
    * @returns flowmeterdata
    */
-   @operation('post', '/insert/bfm', {
+   @post('/insert/bfm', {
     tags: ['Flow meter Data'],
-    summary:
-      'Insert the bulk flow meter data into the system, based on the device ID',
-    operationId: 'insertbfm',
+    summary: 'Insert the bulk flow meter data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted bulk flow meter data',
-        content: {'application/json': {schema: getModelSchemaRef(Flowmeterdata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted bulk flow meter data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Flowmeterdata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'FlowmeterController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertbfm(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Flowmeterdata),
@@ -81,30 +85,34 @@ export class FlowmeterController {
    * @param flowmeterdata 
    * @returns flowmeterdata
    */
-   @operation('post', '/insert/cfm', {
+   @post('/insert/cfm', {
     tags: ['Flow meter Data'],
-    summary:
-      'Insert the consumer flow meter data into the system, based on the device ID',
-    operationId: 'insertcfm',
+    summary: 'Insert the consumer flow meter data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted consumer flow meter data',
-        content: {'application/json': {schema: getModelSchemaRef(Flowmeterdata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted consumer flow meter data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Flowmeterdata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'FlowmeterController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertcfm(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Flowmeterdata),

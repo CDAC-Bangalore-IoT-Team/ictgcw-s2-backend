@@ -37,32 +37,35 @@ export class DevicemetadataController {
    * @param devicemetadata
    * @returns devicemetadata
    */
-  @post('/insert/metadata', {
+   @post('/insert/metadata', {
     tags: ['Device metadata'],
-    summary:
-      'Insert the devices meta data into the system, based on the device ID',
-    operationId: 'insertmetadata',
+    summary: 'Insert device metadata into the system, with all fields required',
+    description: '',
     responses: {
       '200': {
-        description: 'Inserted device meta data into the system',
+        description: 'Inserted device metadata into the system',
         content: {
-          'application/json': {schema: getModelSchemaRef(Devicemetadata)},
-        },
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+          'application/json': {
+            schema: {
+              'x-ts-type': Devicemetadata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'DevicemetadataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertdevicemetadata(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Devicemetadata),

@@ -38,30 +38,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/pr', {
+   @post('/insert/pr', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the preasure sensor data into the system, based on the device ID',
-    operationId: 'insertpr',
+    summary: 'Insert the pressure sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted Preasure sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  pressure sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertpr(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -78,30 +82,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/ph', {
+   @post('/insert/ph', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the pH sensor data into the system, based on the device ID',
-    operationId: 'insertph',
+    summary: 'Insert the pH data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted pH sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted pH sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertph(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -119,30 +127,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/frc', {
+   @post('/insert/frc', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the Free Residual Chlonine sensor data into the system, based on the device ID',
-    operationId: 'insertfrc',
+    summary: 'Insert the Free Residual Chlorine (FRC) sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted Free Residual Chlonine sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Free Residual Chlorine (FRC) sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertfrc(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -160,30 +172,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/tds', {
+   @post('/insert/tds', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the Total Dissolved Solids (TDS) sensor data into the system, based on the device ID',
-    operationId: 'inserttds',
+    summary: 'Insert the Total Dissolved Solids (TDS) sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted TDS sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Total Dissolved Solids (TDS) sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async inserttds(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -201,30 +217,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/nit', {
+   @post('/insert/nit', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the Nitrate sensor data into the system, based on the device ID',
-    operationId: 'insertnit',
+    summary: 'Insert the Nitrate sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted Nitrate sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Nitrate sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertnit(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -242,30 +262,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/fl', {
+   @post('/insert/fl', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the fluoride data into the system, based on the device ID',
-    operationId: 'insertfl',
+    summary: 'Insert the Fluorine sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted Nitrate sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Fluorine sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertfl(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -283,30 +307,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/ars', {
+   @post('/insert/ars', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the arsenic data into the system, based on the device ID',
-    operationId: 'insertars',
+    summary: 'Insert the Arsenic sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted arsenic sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Arsenic sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertars(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -324,30 +352,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/iron', {
+   @post('/insert/iron', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the iron data into the system, based on the device ID',
-    operationId: 'insertiron',
+    summary: 'Insert the Iron sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted iron sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Iron sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertiron(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
@@ -365,30 +397,34 @@ export class SensordataController {
    * @param sensordata 
    * @returns sensordata
    */
-  @operation('post', '/insert/sal', {
+   @post('/insert/sal', {
     tags: ['Sensor Data'],
-    summary:
-      'Insert the salanity data into the system, based on the device ID',
-    operationId: 'insertsalanity',
+    summary: 'Insert the Salanity sensor data into the system, based on the device ID',
     responses: {
       '200': {
-        description: 'Inserted salanity sensor data',
-        content: {'application/json': {schema: getModelSchemaRef(Sensordata)}},
-        '400': {
-          description: 'Not allowable input',
-        },
-        '404': {
-          description: 'Page not found',
-        },
-        '500': {
-          description: 'Server error',
+        description:  'Inserted  Salanity sensor data',
+        content: {
+          'application/json': {
+            schema: {
+              'x-ts-type': Sensordata,
+            },
+          },
         },
       },
-      'x-swagger-router-controller': 'SensordataController',
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async insertsal(
     @requestBody({
+      required: true,
       content: {
         'application/json': {
           schema: getModelSchemaRef(Sensordata),
