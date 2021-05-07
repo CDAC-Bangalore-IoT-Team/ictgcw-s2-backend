@@ -15,6 +15,7 @@ import {
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
+import { Company } from '../models';
 
 const devicemetadataidschema: SchemaObject = {
   type: 'object',
@@ -161,7 +162,6 @@ export class DevicemetadataController {
   @del('/del/devicemetadata/{id}', {
     tags: ['Device metadata'],
     summary: 'Delete device metadata from the system, through device ID',
-    description: '',
     responses: {
       '204': {
         description: 'Devicemetadata DELETE success',
@@ -179,6 +179,26 @@ export class DevicemetadataController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.devicemetadataRepository.deleteById(id);
+  }
+
+  @get('/devicemetadata/{id}/company', {
+    tags: ['Device metadata'],
+    summary: 'Get Company belonging to Devicemetadata from device metadata deviceid',
+    responses: {
+      '200': {
+        description: 'Company belonging to Devicemetadata',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Company)},
+          },
+        },
+      },
+    },
+  })
+  async getCompany(
+    @param.path.string('id') id: typeof Devicemetadata.prototype.deviceid,
+  ): Promise<Company> {
+    return this.devicemetadataRepository.companyId(id);
   }
 
   /* @get('/devicemetadata/count')

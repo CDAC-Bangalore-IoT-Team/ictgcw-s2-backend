@@ -1,4 +1,5 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Company} from './company.model';
 
 @model()
 export class Devicemetadata extends Entity {
@@ -87,6 +88,9 @@ export class Devicemetadata extends Entity {
     required: true,
   })
   dateofinstallation: string;
+
+  @belongsTo(() => Company, {name: 'companyId'})
+  companyid: string;
 
   constructor(data?: Partial<Devicemetadata>) {
     super(data);

@@ -5,21 +5,18 @@ import {
   BelongsToAccessor,
 } from '@loopback/repository';
 import {PostgresdbDataSource} from '../datasources';
-import {
-  Devicemetadata,
-  DevicemetadataRelations,
-} from '../models/devicemetadata.model';
 import {Company} from '../models';
+import {Sensordata, SensordataRelations} from '../models/sensordata.model';
 import {CompanyRepository} from './company.repository';
 
-export class DevicemetadataRepository extends DefaultCrudRepository<
-  Devicemetadata,
-  typeof Devicemetadata.prototype.deviceid,
-  DevicemetadataRelations
+export class SensordataRepository extends DefaultCrudRepository<
+  Sensordata,
+  typeof Sensordata.prototype.deviceid,
+  SensordataRelations
 > {
   public readonly companyId: BelongsToAccessor<
     Company,
-    typeof Devicemetadata.prototype.deviceid
+    typeof Sensordata.prototype.deviceid
   >;
 
   constructor(
@@ -27,7 +24,7 @@ export class DevicemetadataRepository extends DefaultCrudRepository<
     @repository.getter('CompanyRepository')
     protected companyRepositoryGetter: Getter<CompanyRepository>,
   ) {
-    super(Devicemetadata, dataSource);
+    super(Sensordata, dataSource);
     this.companyId = this.createBelongsToAccessorFor(
       'companyId',
       companyRepositoryGetter,
