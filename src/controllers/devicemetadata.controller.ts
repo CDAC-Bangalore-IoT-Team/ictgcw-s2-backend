@@ -1,7 +1,4 @@
-import {
-  FilterExcludingWhere,
-  repository,
-} from '@loopback/repository';
+import {FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   post,
   param,
@@ -15,7 +12,7 @@ import {
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
-import { Company } from '../models';
+import {Company} from '../models';
 
 const devicemetadataidschema: SchemaObject = {
   type: 'object',
@@ -39,7 +36,7 @@ export class DevicemetadataController {
    * @param devicemetadata
    * @returns devicemetadata
    */
-  @post('/insert/metadata', {
+  @post('/insert/devicemetadata', {
     tags: ['Device metadata'],
     summary: 'Insert device metadata into the system, with all fields required',
     description: '',
@@ -183,7 +180,8 @@ export class DevicemetadataController {
 
   @get('/devicemetadata/{id}/company', {
     tags: ['Device metadata'],
-    summary: 'Get Company belonging to Devicemetadata from device metadata deviceid',
+    summary:
+      'Get Company belonging to Devicemetadata from device metadata deviceid',
     responses: {
       '200': {
         description: 'Company belonging to Devicemetadata',

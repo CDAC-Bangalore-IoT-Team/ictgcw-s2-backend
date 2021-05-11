@@ -1,21 +1,12 @@
-import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
-} from '@loopback/repository';
+import {Filter, FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   post,
   param,
   get,
   getModelSchemaRef,
   patch,
-  put,
-  del,
   requestBody,
-  response,
+  del,
 } from '@loopback/rest';
 import {Company} from '../models';
 import {CompanyRepository} from '../repositories';
@@ -206,7 +197,7 @@ export class CompanyController {
     await this.companyRepository.replaceById(id, company);
   } */
 
-  @patch('/del/company/{id}', {
+  @del('/del/company/{id}', {
     tags: ['Company details'],
     summary: 'Delete company details by company id.',
     responses: {
