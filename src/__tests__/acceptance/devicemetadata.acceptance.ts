@@ -34,8 +34,6 @@ describe('Device Meta data', () => {
     await devicemetadatarepo.deleteAll();
   });
 
-  // Insert company
-
   it('fails when no bearer token', async () => {
     await client.post('/insert/devicemetadata').expect(401);
   });
@@ -46,10 +44,13 @@ describe('Device Meta data', () => {
       .post('/insert/devicemetadata')
       .set('Authorization', 'Bearer ' + token)
       .send(devicemetadata)
-      .expect(200);
-    expect(response.body).to.containDeep(devicemetadata);
+      .expect(200, toJSON(devicemetadata));
     const result = await devicemetadatarepo.findById(response.body.deviceid);
-    expect(result).to.containDeep(devicemetadata);
+    result.dateofinstallation = result.dateofinstallation;
+    /*
+    TODO: clean logic
+    */
+    expect(result.commtnmodule).to.equal(devicemetadata.commtnmodule);
   });
 
   it('rejects requests to create a device meta data with no deviceid', async function () {
@@ -199,94 +200,167 @@ describe('Device Meta data', () => {
       .post('/insert/devicemetadata')
       .set('Authorization', 'Bearer ' + token)
       .send(devicemetadata)
-      .expect(422);
+      .expect(500);
   });
 
-  // Single Company Item dealing
+  it('rejects requests to create a device meta data with wrong companyid', async function () {
+    const devicemetadata: Partial<Devicemetadata> = new Devicemetadata({
+      deviceid: 'pr111',
+      devicetype: 'pr',
+      lattitude: '12.1234567',
+      longitude: '77.456789',
+      altitude: '112',
+      devicedimentions: '100x50x30',
+      gatewayid: 'gw1001',
+      locationdescription: 'home',
+      devicemodel: 'PSD234',
+      deviceserialnumber: '123ERF345',
+      devicepowermech: 'solar',
+      commtnmodule: 'wifi',
+      technicianname: 'utm',
+      dateofinstallation: '2021-05-12T10:44:45.035Z',
+      companyid: '99999',
+    });
+    await client
+      .post('/insert/devicemetadata')
+      .set('Authorization', 'Bearer ' + token)
+      .send(devicemetadata)
+      .expect(500);
+  });
 
-  /* context('when dealing with a single persisted company', () => {
-    let persistedCompany: Devicemetadata;
+  // Single Device metadata Item dealing
+
+  context('when dealing with a single persisted device metadata', () => {
+    let persistedDevicemetadata: Devicemetadata;
 
     beforeEach(async () => {
-      persistedCompany = await givenDevicemetadataInstance();
+      persistedDevicemetadata = await givenDevicemetadataInstance();
     });
 
+    //get device meta data through deviceid and companyid
     it('fails when no bearer token', async () => {
       await client
-        .get('/get/company/${persistedCompany.companyid}')
+        .get('/get/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
     });
 
-    it('gets a company by ID', () => {
+    it('gets a device meta data by ID', () => {
       return client
-        .get(`/get/company/${persistedCompany.companyid}`)
+        .get(`/get/devicemetadata/${persistedDevicemetadata.deviceid}`)
         .set('Authorization', 'Bearer ' + token)
         .send()
-        .expect(200, toJSON(persistedCompany));
+        .expect(200, toJSON(persistedDevicemetadata));
     });
 
-    it('returns 404 when getting a company that does not exist', () => {
+    it('returns 404 when getting a device meta data that does not exist', () => {
       return client
-        .get('/get/company/asdfgh')
+        .get('/get/devicemetadata/asdfgh')
         .set('Authorization', 'Bearer ' + token)
         .expect(404);
     });
 
+    //update device meta data through deviceid
     it('fails when no bearer token', async () => {
       await client
-        .patch(`/edit/company/${persistedCompany.companyid}`)
+        .patch('/update/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
     });
 
-    it('updates the company by ID ', async () => {
-      const updatedTodo = givenCompany({
-        companyname: 'test321',
+    it('updates the device meta data by ID ', async () => {
+      const updatedDevicemetadata = givenDevicemetadata({
+        gatewayid: 'gw202',
       });
       await client
-        .patch(`/edit/company/${persistedCompany.companyid}`)
+        .patch(`/update/devicemetadata/${persistedDevicemetadata.deviceid}`)
         .set('Authorization', 'Bearer ' + token)
-        .send(updatedTodo)
+        .send(updatedDevicemetadata)
         .expect(204);
       const result = await devicemetadatarepo.findById(
-        persistedCompany.companyid,
+        persistedDevicemetadata.deviceid,
       );
-      expect(result).to.containEql(updatedTodo);
+      expect(result.lattitude).to.containEql(updatedDevicemetadata.lattitude);
     });
 
-    it('returns 404 when updating a todo that does not exist', () => {
+    it('returns 422 when getting a device meta data when request body', () => {
       return client
-        .patch('/edit/company/99999')
+        .patch('/update/devicemetadata/asdfgh')
         .set('Authorization', 'Bearer ' + token)
-        .send(givenCompany({companyname: 'test321'}))
-        .expect(404);
+        .expect(422);
     });
 
-    // Delete
-
+    //replace device meta data by deviceid
     it('fails when no bearer token', async () => {
       await client
-        .del('/del/company/${persistedCompany.companyid}')
+        .put('/replace/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
     });
 
-    it('deletes a company', async () => {
+    it('replaces the device meta data by device id', async () => {
+      const updatedDevicemetadata = givenDevicemetadata({
+        deviceid: 'pr111',
+        devicetype: 'pr',
+        lattitude: '12.1234567',
+        longitude: '77.456789',
+        altitude: '120',
+        devicedimentions: '100x50x30',
+        gatewayid: 'gw1001',
+        locationdescription: 'home',
+        devicemodel: 'PSD234',
+        deviceserialnumber: '123ERF345',
+        devicepowermech: 'solar',
+        commtnmodule: 'wifi',
+        technicianname: 'tmu',
+        dateofinstallation: '2021-05-12T13:01:12.236Z',
+        companyid: 'test123',
+      });
       await client
-        .del(`/del/company/${persistedCompany.companyid}`)
+        .put(`/replace/devicemetadata/${persistedDevicemetadata.deviceid}`)
+        .set('Authorization', 'Bearer ' + token)
+        .send(updatedDevicemetadata)
+        .expect(204);
+      const result = await devicemetadatarepo.findById(
+        persistedDevicemetadata.deviceid,
+      );
+      expect(result.altitude).to.containEql(updatedDevicemetadata.altitude);
+    });
+
+    it('returns 404 when replacing a device meta data that does not exist', () => {
+      return client
+        .put('/replace/devicemetadata/99999')
+        .set('Authorization', 'Bearer ' + token)
+        .send(
+          givenDevicemetadata({
+            deviceid: '99999',
+          }),
+        )
+        .expect(404);
+    });
+
+    //delete device meta data by id
+    it('fails when no bearer token', async () => {
+      await client
+        .del('/del/devicemetadata/${persistedDevicemetadata.deviceid}')
+        .expect(401);
+    });
+
+    it('deletes a device metadata', async () => {
+      await client
+        .del(`/del/devicemetadata/${persistedDevicemetadata.deviceid}`)
         .set('Authorization', 'Bearer ' + token)
         .send()
         .expect(204);
       await expect(
-        devicemetadatarepo.findById(persistedCompany.companyid),
+        devicemetadatarepo.findById(persistedDevicemetadata.deviceid),
       ).to.be.rejectedWith(EntityNotFoundError);
     });
 
-    it('returns 404 when deleting a device metadata that does not exist', async () => {
-      await client
-        .del(`/del/company/99999`)
+    it('returns 404 when getting a device meta data that does not exist', () => {
+      return client
+        .del('/del/devicemetadata/asdfgh')
         .set('Authorization', 'Bearer ' + token)
         .expect(404);
     });
-  }); */
+  });
 
   /*
    ============================================================================
@@ -311,10 +385,10 @@ describe('Device Meta data', () => {
      * Override default config for DataSource for testing so we don't write
      * test data to file when using the memory connector.
      */
-    app.bind('datasources.config.postgresdb').to({
+    /* app.bind('datasources.config.postgresdb').to({
       name: 'db',
       connector: 'memory',
-    });
+    }); */
 
     // Start Application
     await app.start();
@@ -327,8 +401,8 @@ describe('Device Meta data', () => {
   }
 
   async function givenDevicemetadataInstance(
-    company?: Partial<Devicemetadata>,
+    devicemetadata?: Partial<Devicemetadata>,
   ) {
-    return devicemetadatarepo.create(givenDevicemetadata(company));
+    return devicemetadatarepo.create(givenDevicemetadata(devicemetadata));
   }
 });

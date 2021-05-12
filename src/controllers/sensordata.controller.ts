@@ -435,7 +435,7 @@ export class SensordataController {
     return this.sensordataRepository.create(sensordata);
   }
 
-  @get('/sensordata/{id}/company', {
+  /* @get('/sensordata/{id}/company', {
     tags: ['Sensor Data'],
     summary: 'Get company of the sensor based on the device id of sensor',
     responses: {
@@ -462,7 +462,7 @@ export class SensordataController {
     @param.path.string('id') id: typeof Sensordata.prototype.deviceid,
   ): Promise<Company> {
     return this.sensordataRepository.companyId(id);
-  }
+  } */
 
   @get('/sensordata/{id}', {
     tags: ['Sensor Data'],

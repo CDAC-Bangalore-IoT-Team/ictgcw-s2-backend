@@ -1,4 +1,7 @@
-import {Entity, model, property} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasMany} from '@loopback/repository';
+import {Devicemetadata} from './devicemetadata.model';
+import {Flowmeterdata} from './flowmeterdata.model';
+import {Sensordata} from './sensordata.model';
 
 @model()
 export class Company extends Entity {
@@ -21,6 +24,14 @@ export class Company extends Entity {
   })
   companyaddress?: string;
 
+  @hasMany(() => Devicemetadata, {keyTo: 'companyid'})
+  devicemetadata: Devicemetadata[];
+
+  @hasMany(() => Flowmeterdata, {keyTo: 'companyid'})
+  flowmeterdata: Flowmeterdata[];
+
+  @hasMany(() => Sensordata, {keyTo: 'companyid'})
+  sensordata: Sensordata[];
 
   constructor(data?: Partial<Company>) {
     super(data);

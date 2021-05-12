@@ -118,7 +118,7 @@ export class FlowmeterController {
    * @param id
    * @returns Company
    */
-  @get('/get/flowmeterdata/{id}/company', {
+  /* @get('/get/flowmeterdata/{id}/company', {
     tags: ['Flow meter Data'],
     summary:
       'Get company of the flow meter based on the device id of flow meter',
@@ -146,7 +146,7 @@ export class FlowmeterController {
     @param.path.string('id') id: typeof Flowmeterdata.prototype.deviceid,
   ): Promise<Company> {
     return this.flowmeterdataRepository.companyId(id);
-  }
+  } */
 
   /* @get('/flowmeterdata/count')
   @response(200, {

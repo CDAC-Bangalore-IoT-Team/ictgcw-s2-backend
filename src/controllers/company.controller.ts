@@ -8,7 +8,7 @@ import {
   requestBody,
   del,
 } from '@loopback/rest';
-import {Company} from '../models';
+import {Company, Devicemetadata} from '../models';
 import {CompanyRepository} from '../repositories';
 import {authenticate} from '@loopback/authentication';
 
@@ -163,7 +163,59 @@ export class CompanyController {
     await this.companyRepository.updateById(id, company);
   }
 
-  /* @put('/companies/{id}')
+  @get('/get/company/{id}/devicemetadata', {
+    tags: ['Company details'],
+    summary: 'Get all device meta data from a company',
+    responses: {
+      '200': {
+        description: 'Array of Company has many Devicemetadata',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Devicemetadata)},
+          },
+        },
+        '400': {
+          description: 'Not allowable input',
+        },
+        '404': {
+          description: 'Page not found',
+        },
+        '500': {
+          description: 'Server error',
+        },
+      },
+    },
+  })
+  async getAllDevicemetadataOfaCompany(
+    @param.path.string('id') id: string,
+    @param.query.object('filter') filter?: Filter<Devicemetadata>,
+  ): Promise<Devicemetadata[]> {
+    return this.companyRepository.devicemetadata(id).find(filter);
+  }
+
+  @del('/del/company/{id}', {
+    tags: ['Company details'],
+    summary: 'Delete company details by company id.',
+    responses: {
+      '204': {
+        description: 'Company DELETE success',
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.companyRepository.deleteById(id);
+  }
+
+/* @put('/companies/{id}')
   @response(204, {
     description: 'Company PUT success',
   })
@@ -196,28 +248,6 @@ export class CompanyController {
   ): Promise<void> {
     await this.companyRepository.replaceById(id, company);
   } */
-
-  @del('/del/company/{id}', {
-    tags: ['Company details'],
-    summary: 'Delete company details by company id.',
-    responses: {
-      '204': {
-        description: 'Company DELETE success',
-      },
-      '400': {
-        description: 'Not allowable input',
-      },
-      '404': {
-        description: 'Page not found',
-      },
-      '500': {
-        description: 'Server error',
-      },
-    },
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.companyRepository.deleteById(id);
-  }
 
   /* @get('/companies/count')
   @response(200, {

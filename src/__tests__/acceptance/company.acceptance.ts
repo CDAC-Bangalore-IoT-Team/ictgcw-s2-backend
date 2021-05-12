@@ -80,6 +80,7 @@ describe('Company Details', () => {
     expect(result).to.containDeep(company);
   });
 
+
   // Single Company Item dealing
 
   context('when dealing with a single persisted company', () => {
@@ -89,6 +90,7 @@ describe('Company Details', () => {
       persistedCompany = await givenCompanyInstance();
     });
 
+    //get company by id
     it('fails when no bearer token', async () => {
       await client
         .get('/get/company/${persistedCompany.companyid}')
@@ -110,24 +112,22 @@ describe('Company Details', () => {
         .expect(404);
     });
 
-    /* it('replaces the todo by ID', async () => {
-      const updatedTodo = givenTodo({
-        title: 'DO SOMETHING AWESOME',
-        desc: 'It has to be something ridiculous',
-        isComplete: true,
-      });
+    //get all companies
+    it('fails when no bearer token', async () => {
       await client
-        .put(`/todos/${persistedCompany.companyid}`)
-        .send(updatedTodo)
-        .expect(204);
-      const result = await todoRepo.findById(persistedCompany.companyid);
-      expect(result).to.containEql(updatedTodo);
+        .get('/get/companies')
+        .expect(401);
     });
 
-    it('returns 404 when replacing a todo that does not exist', () => {
-      return client.put('/todos/99999').send(givenTodo()).expect(404);
-    });*/
+    it('gets all the companies', () => {
+      return client
+        .get(`/get/companies`)
+        .set('Authorization', 'Bearer ' + token)
+        .send()
+        .expect(200, [toJSON(persistedCompany)]);
+    });
 
+    //update company
     it('fails when no bearer token', async () => {
       await client
         .patch(`/edit/company/${persistedCompany.companyid}`)
@@ -155,8 +155,30 @@ describe('Company Details', () => {
         .expect(404);
     });
 
-    // Delete
+    //get metadata for a company
+    it('fails when no bearer token', async () => {
+      await client
+        .get(`/get/company/${persistedCompany.companyid}/devicemetadata`)
+        .expect(401);
+    });
 
+    /* it('get device metadata from a companyid', async () => {
+     await client
+        .patch(`/get/company/${persistedCompany.companyid}/devicemetadata`)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(204);
+      const result = await comapnyrepo.findById(persistedCompany.companyid);
+      expect(result).to.containEql(updatedTodo);
+    }); */
+
+    it('returns 404 when updating a todo that does not exist', () => {
+      return client
+        .patch('/get/company/${persistedCompany.companyid}/devicemetadata')
+        .set('Authorization', 'Bearer ' + token)
+        .expect(404);
+    });
+
+    // Delete
     it('fails when no bearer token', async () => {
       await client
         .del('/del/company/${persistedCompany.companyid}')

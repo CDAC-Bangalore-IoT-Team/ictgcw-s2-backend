@@ -1,4 +1,4 @@
-import {FilterExcludingWhere, repository} from '@loopback/repository';
+import {Count, CountSchema, Filter, FilterExcludingWhere, repository, Where} from '@loopback/repository';
 import {
   post,
   param,
@@ -8,6 +8,9 @@ import {
   del,
   requestBody,
   SchemaObject,
+  put,
+  response,
+  tags,
 } from '@loopback/rest';
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
@@ -178,7 +181,34 @@ export class DevicemetadataController {
     await this.devicemetadataRepository.deleteById(id);
   }
 
-  @get('/devicemetadata/{id}/company', {
+  @put('/replace/devicemetadata/{id}', {
+    tags: ['Device metadata'],
+    summary: 'Replace device metadata from the system, through device ID',
+    responses: {
+      '204': {
+        description: 'Devicemetadata PUT success',
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() devicemetadata: Devicemetadata,
+  ): Promise<void> {
+    await this.devicemetadataRepository.replaceById(id, devicemetadata);
+  }
+
+  
+
+ /*  @get('/devicemetadata/{id}/company', {
     tags: ['Device metadata'],
     summary:
       'Get Company belonging to Devicemetadata from device metadata deviceid',
@@ -197,7 +227,7 @@ export class DevicemetadataController {
     @param.path.string('id') id: typeof Devicemetadata.prototype.deviceid,
   ): Promise<Company> {
     return this.devicemetadataRepository.companyId(id);
-  }
+  } */
 
   /* @get('/devicemetadata/count')
   @tags('Device meta data')
@@ -209,9 +239,9 @@ export class DevicemetadataController {
     @param.where(Devicemetadata) where?: Where<Devicemetadata>,
   ): Promise<Count> {
     return this.devicemetadataRepository.count(where);
-  }
+  }*/
 
-  @get('/devicemetadata')
+ /*  @get('/devicemetadata')
   @tags('Device meta data')
   @response(200, {
     description: 'Array of Devicemetadata model instances',
@@ -228,9 +258,9 @@ export class DevicemetadataController {
     @param.filter(Devicemetadata) filter?: Filter<Devicemetadata>,
   ): Promise<Devicemetadata[]> {
     return this.devicemetadataRepository.find(filter);
-  }
+  } */
 
-  @patch('/devicemetadata')
+  /*@patch('/devicemetadata')
   @tags('Device meta data')
   @response(200, {
     description: 'Devicemetadata PATCH success count',
@@ -265,21 +295,6 @@ export class DevicemetadataController {
     filter?: FilterExcludingWhere<Devicemetadata>,
   ): Promise<Devicemetadata> {
     return this.devicemetadataRepository.findById(id, filter);
-  }
+  }*/
 
-  
-
-  @put('/devicemetadata/{id}')
-  @tags('Device meta data')
-  @response(204, {
-    description: 'Devicemetadata PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() devicemetadata: Devicemetadata,
-  ): Promise<void> {
-    await this.devicemetadataRepository.replaceById(id, devicemetadata);
-  }
-
-   */
 }

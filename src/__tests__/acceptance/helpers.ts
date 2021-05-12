@@ -4,7 +4,10 @@
 // License text available at https://opensource.org/licenses/MIT
 
 import {EntityCrudRepository} from '@loopback/repository';
+import {flow} from 'lodash';
+import {FlowmeterController} from '../../controllers/flowmeter.controller';
 import {Company, Devicemetadata} from '../../models';
+import {Flowmeterdata} from '../../models/flowmeterdata.model';
 
 /**
  * Generate a complete Company object for use with tests.
@@ -23,7 +26,7 @@ export function givenCompany(company?: Partial<Company>) {
 }
 
 /**
- * Generate a complete Company object for use with tests.
+ * Generate a complete object for use with tests.
  * @param devicemetadata - A partial (or complete) Todo object.
  */
 export function givenDevicemetadata(devicemetadata?: Partial<Devicemetadata>) {
@@ -42,10 +45,52 @@ export function givenDevicemetadata(devicemetadata?: Partial<Devicemetadata>) {
       devicepowermech: 'solar',
       commtnmodule: 'wifi',
       technicianname: 'utm',
-      dateofinstallation: '2021-05-05T12:45:55.022Z',
+      dateofinstallation: '2021-05-12T13:01:12.236Z',
       companyid: 'test123',
     },
     devicemetadata,
+  );
+  return new Devicemetadata(data);
+}
+
+/**
+ * Generate a complete object for use with tests.
+ * @param flowmeterdata - A partial (or complete) Todo object.
+ */
+export function givenConsumerFlowmeteradata(flowmeterdata?: Partial<Flowmeterdata>) {
+  const data = Object.assign(
+    {
+      deviceid: 'cfm123',
+      gatewayid: 'gw101',
+      location: 'last house',
+      devicetype: 'cfm',
+      quantity: 100,
+      flowrate: 10,
+      battery: '100',
+      errorcode: '00',
+      datetime: '2021-05-12T14:54:10.545Z',
+      companyid: 'test123',
+    },
+    flowmeterdata,
+  );
+  return new Devicemetadata(data);
+}
+
+export function givenBulkFlowmeteradata(flowmeterdata?: Partial<Flowmeterdata>) {
+  const data = Object.assign(
+    {
+      deviceid: 'bfm123',
+      gatewayid: 'gw101',
+      location: 'enter house',
+      devicetype: 'bfm',
+      quantity: 100,
+      flowrate: 10,
+      battery: '100',
+      errorcode: '00',
+      datetime: '2021-05-12T14:54:10.545Z',
+      companyid: 'test123',
+    },
+    flowmeterdata,
   );
   return new Devicemetadata(data);
 }
@@ -60,4 +105,10 @@ export type CompanyRepository = EntityCrudRepository<
 export type DevicemetadataRepository = EntityCrudRepository<
   Devicemetadata,
   typeof Devicemetadata.prototype.deviceid
+>;
+
+// Type alias used for tests (not an actual repository class)
+export type FlowmeterdataRepository = EntityCrudRepository<
+  Flowmeterdata,
+  typeof Flowmeterdata.prototype.deviceid
 >;
