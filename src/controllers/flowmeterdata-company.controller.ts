@@ -1,19 +1,6 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Flowmeterdata,
-  Company,
-} from '../models';
-import {FlowmeterdataRepository} from '../repositories';
 
 export class FlowmeterdataCompanyController {
-  constructor(
+ /*  constructor(
     @repository(FlowmeterdataRepository)
     public flowmeterdataRepository: FlowmeterdataRepository,
   ) { }
@@ -31,8 +18,8 @@ export class FlowmeterdataCompanyController {
     },
   })
   async getCompany(
-    @param.path.string('id') id: typeof Flowmeterdata.prototype.deviceid,
+    @param.path.string('id') id: typeof Flowmeterdata.prototype.id,
   ): Promise<Company> {
     return this.flowmeterdataRepository.companyId(id);
-  }
+  } */
 }

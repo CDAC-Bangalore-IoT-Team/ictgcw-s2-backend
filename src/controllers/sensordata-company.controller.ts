@@ -1,19 +1,6 @@
-import {
-  repository,
-} from '@loopback/repository';
-import {
-  param,
-  get,
-  getModelSchemaRef,
-} from '@loopback/rest';
-import {
-  Sensordata,
-  Company,
-} from '../models';
-import {SensordataRepository} from '../repositories';
 
 export class SensordataCompanyController {
-  constructor(
+ /*  constructor(
     @repository(SensordataRepository)
     public sensordataRepository: SensordataRepository,
   ) { }
@@ -31,8 +18,8 @@ export class SensordataCompanyController {
     },
   })
   async getCompany(
-    @param.path.string('id') id: typeof Sensordata.prototype.deviceid,
+    @param.path.string('id') id: typeof Sensordata.prototype.id,
   ): Promise<Company> {
     return this.sensordataRepository.companyId(id);
-  }
+  } */
 }

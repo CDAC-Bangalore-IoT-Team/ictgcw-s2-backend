@@ -6,3 +6,7 @@ export * from './flowmeterdata-company.controller';
 export * from './company-flowmeterdata.controller';
 export * from './sensordata-company.controller';
 export * from './company-sensordata.controller';
+export * from './flowmeterdata-devicemetadata.controller';
+export * from './sensordata-company.controller';
+export * from './sensordata-devicemetadata.controller';
+export * from './company-sensordata.controller';

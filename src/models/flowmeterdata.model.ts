@@ -1,5 +1,6 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {Company} from './company.model';
+import {Devicemetadata} from './devicemetadata.model';
 
 @model()
 export class Flowmeterdata extends Entity {
@@ -7,19 +8,12 @@ export class Flowmeterdata extends Entity {
     type: 'string',
     id: true,
     generated: false,
-    required: true,
+    defaultFn: 'uuidv4',
   })
+  id?: string;
+
+  @belongsTo(() => Devicemetadata, {name: 'devicemetadataId'})
   deviceid: string;
-
-  @property({
-    type: 'string',
-  })
-  gatewayid?: string;
-
-  @property({
-    type: 'string',
-  })
-  location?: string;
 
   @property({
     type: 'string',
@@ -31,23 +25,23 @@ export class Flowmeterdata extends Entity {
     type: 'number',
     required: true,
   })
-  quantity: 'number'
+  quantity: number;
 
   @property({
     type: 'number',
     required: true,
   })
-  flowrate: 'number'
-
-  @property({
-    type: 'string',
-  })
-  battery?: string;
+  flowrate: number;
 
   @property({
     type: 'string',
   })
   errorcode?: string;
+
+  @property({
+    type: 'string',
+  })
+  battery?: string;
 
   @property({
     type: 'date',

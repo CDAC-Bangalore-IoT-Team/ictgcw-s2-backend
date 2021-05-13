@@ -1,4 +1,4 @@
-import {FilterExcludingWhere, repository} from '@loopback/repository';
+import {Filter, FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   post,
   getModelSchemaRef,
@@ -6,12 +6,10 @@ import {
   api,
   get,
   param,
-  response,
 } from '@loopback/rest';
 import {Flowmeterdata} from '../models/flowmeterdata.model';
 import {FlowmeterdataRepository} from '../repositories';
 import {authenticate} from '@loopback/authentication';
-import {Company} from '../models';
 
 @api({
   components: {},
@@ -113,6 +111,39 @@ export class FlowmeterController {
     return this.flowmeterdataRepository.create(flowmeterdata);
   }
 
+  @get('/get/flowmeterdata/{deviceid}', {
+    tags: ['Flow meter Data'],
+    summary: 'Get Array of flowmeter data based on the device id of sensor',
+    responses: {
+      '200': {
+        description: 'Array of Flowmeter model instances',
+        content: {
+          'application/json': {
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Flowmeterdata, {includeRelations: true}),
+            },
+          },
+        },
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async find(
+    @param.path.string('deviceid') deviceid: string,
+    @param.filter(Flowmeterdata) filter?: Filter<Flowmeterdata>,
+  ): Promise<Flowmeterdata[]> {
+    return this.flowmeterdataRepository.find({where: {deviceid: deviceid}});
+  }
+ 
   /**
    * Get company of the flow meter based on the device id of flow meter
    * @param id
@@ -196,7 +227,7 @@ export class FlowmeterController {
     return this.flowmeterdataRepository.updateAll(flowmeterdata, where);
   }*/
 
-  @get('/get/flowmeterdata/{id}', {
+  /* @get('/get/flowmeterdata/{id}', {
     tags: ['Flow meter Data'],
     summary: 'Get flow meter data based on the device id of flow meter',
     responses: {
@@ -225,7 +256,7 @@ export class FlowmeterController {
     filter?: FilterExcludingWhere<Flowmeterdata>,
   ): Promise<Flowmeterdata> {
     return this.flowmeterdataRepository.findById(id, filter);
-  }
+  } */
 
   /*@patch('/flowmeterdata/{id}')
   @response(204, {

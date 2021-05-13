@@ -1,4 +1,4 @@
-import {FilterExcludingWhere, repository} from '@loopback/repository';
+import {Filter, FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   post,
   param,
@@ -9,8 +9,8 @@ import {
   response,
 } from '@loopback/rest';
 import {Sensordata} from '../models/sensordata.model';
-import {SensordataRepository} from '../repositories';
 import {authenticate} from '@loopback/authentication';
+import {SensordataRepository} from '../repositories/sensordata.repository';
 import {Company} from '../models';
 
 @api({
@@ -435,15 +435,18 @@ export class SensordataController {
     return this.sensordataRepository.create(sensordata);
   }
 
-  /* @get('/sensordata/{id}/company', {
+  @get('/get/sensordata/{deviceid}', {
     tags: ['Sensor Data'],
-    summary: 'Get company of the sensor based on the device id of sensor',
+    summary: 'Get Array of sensor data based on the device id of sensor',
     responses: {
       '200': {
-        description: 'Company belonging to Sensordata',
+        description: 'Array of Sensordata model instances',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Company)},
+            schema: {
+              type: 'array',
+              items: getModelSchemaRef(Sensordata, {includeRelations: true}),
+            },
           },
         },
       },
@@ -458,13 +461,14 @@ export class SensordataController {
       },
     },
   })
-  async getCompany(
-    @param.path.string('id') id: typeof Sensordata.prototype.deviceid,
-  ): Promise<Company> {
-    return this.sensordataRepository.companyId(id);
-  } */
+  async find(
+    @param.path.string('deviceid') deviceid: string,
+    @param.filter(Sensordata) filter?: Filter<Sensordata>,
+  ): Promise<Sensordata[]> {
+    return this.sensordataRepository.find({where: {deviceid: deviceid}});
+  }
 
-  @get('/sensordata/{id}', {
+  /* @get('/sensordata/{id}', {
     tags: ['Sensor Data'],
     summary: 'Get sensor data based on the device id of sensor',
     responses: {
@@ -493,7 +497,36 @@ export class SensordataController {
     filter?: FilterExcludingWhere<Sensordata>,
   ): Promise<Sensordata> {
     return this.sensordataRepository.findById(id, filter);
-  }
+  } */
+
+  /* @get('/sensordata/{deviceid}/company', {
+    tags: ['Sensor Data'],
+    summary: 'Get company of the sensor based on the device id of sensor',
+    responses: {
+      '200': {
+        description: 'Company belonging to Sensordata',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Company)},
+          },
+        },
+      },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
+    },
+  })
+  async getCompany(
+    @param.path.string('id') id: typeof Sensordata.prototype.deviceid,
+  ): Promise<Company> {
+    return this.sensordataRepository.companyId(id);
+  } */
 
   /*@patch('/sensordata/{id}')
   @response(204, {
@@ -542,27 +575,9 @@ export class SensordataController {
     @param.where(Sensordata) where?: Where<Sensordata>,
   ): Promise<Count> {
     return this.sensordataRepository.count(where);
-  }
+  }*/
 
-  @get('/sensordata')
-  @response(200, {
-    description: 'Array of Sensordata model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Sensordata, {includeRelations: true}),
-        },
-      },
-    },
-  })
-  async find(
-    @param.filter(Sensordata) filter?: Filter<Sensordata>,
-  ): Promise<Sensordata[]> {
-    return this.sensordataRepository.find(filter);
-  }
-
-  @patch('/sensordata')
+  /*@patch('/sensordata')
   @response(200, {
     description: 'Sensordata PATCH success count',
     content: {'application/json': {schema: CountSchema}},

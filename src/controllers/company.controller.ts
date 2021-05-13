@@ -11,6 +11,8 @@ import {
 import {Company, Devicemetadata} from '../models';
 import {CompanyRepository} from '../repositories';
 import {authenticate} from '@loopback/authentication';
+import { Flowmeterdata } from '../models/flowmeterdata.model';
+import { Sensordata } from '../models/sensordata.model';
 
 @authenticate('jwt')
 export class CompanyController {
@@ -192,6 +194,48 @@ export class CompanyController {
   ): Promise<Devicemetadata[]> {
     return this.companyRepository.devicemetadata(id).find(filter);
   }
+
+  /* @get('/get/company/{id}/flowmeterdata', {
+    tags: ['Company details'],
+    summary: 'Get all device meta data from a company',
+    responses: {
+      '200': {
+        description: 'Array of Company has many Flowmeterdata',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Flowmeterdata)},
+          },
+        },
+      },
+    },
+  })
+  async getAllflowmeterdataOfaCompany(
+    @param.path.string('id') id: string,
+    @param.query.object('filter') filter?: Filter<Flowmeterdata>,
+  ): Promise<Flowmeterdata[]> {
+    return this.companyRepository.flowmeterdata(id).find(filter);
+  }
+
+  @get('/get/company/{id}/sensordata', {
+    tags: ['Company details'],
+    summary: 'Get all sensor data details from a company',
+    responses: {
+      '200': {
+        description: 'Array of Company has many Sensordata',
+        content: {
+          'application/json': {
+            schema: {type: 'array', items: getModelSchemaRef(Sensordata)},
+          },
+        },
+      },
+    },
+  })
+  async getAllSensordataOfaCompany(
+    @param.path.string('id') id: string,
+    @param.query.object('filter') filter?: Filter<Sensordata>,
+  ): Promise<Sensordata[]> {
+    return this.companyRepository.sensordata(id).find(filter);
+  } */
 
   @del('/del/company/{id}', {
     tags: ['Company details'],

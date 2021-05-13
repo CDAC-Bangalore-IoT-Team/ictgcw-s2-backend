@@ -1,5 +1,6 @@
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import {Company} from './company.model';
+import {Devicemetadata} from './devicemetadata.model';
 
 @model()
 export class Sensordata extends Entity {
@@ -7,9 +8,9 @@ export class Sensordata extends Entity {
     type: 'string',
     id: true,
     generated: false,
-    required: true,
+    defaultFn: 'uuidv4',
   })
-  deviceid?: string;
+  id?: string;
 
   @property({
     type: 'string',
@@ -18,25 +19,15 @@ export class Sensordata extends Entity {
   devicetype: string;
 
   @property({
-    type: 'string',
+    type: 'number',
+    required: true,
   })
-  gatewayid?: string;
-
-  @property({
-    type: 'string',
-  })
-  location?: string;
+  sensorvalue: number;
 
   @property({
     type: 'string',
   })
   errorcode?: string;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  sensorvalue: number;
 
   @property({
     type: 'date',
@@ -46,6 +37,9 @@ export class Sensordata extends Entity {
 
   @belongsTo(() => Company, {name: 'companyId'})
   companyid: string;
+
+  @belongsTo(() => Devicemetadata, {name: 'devicemetadataId'})
+  deviceid: string;
 
   constructor(data?: Partial<Sensordata>) {
     super(data);

@@ -1,28 +1,6 @@
-import {
-  Count,
-  CountSchema,
-  Filter,
-  repository,
-  Where,
-} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  getWhereSchemaFor,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {
-  Company,
-} from '../models';
-import { Flowmeterdata } from '../models/flowmeterdata.model';
-import {CompanyRepository} from '../repositories';
 
 export class CompanyFlowmeterdataController {
-  constructor(
+  /* constructor(
     @repository(CompanyRepository) protected companyRepository: CompanyRepository,
   ) { }
 
@@ -60,12 +38,12 @@ export class CompanyFlowmeterdataController {
         'application/json': {
           schema: getModelSchemaRef(Flowmeterdata, {
             title: 'NewFlowmeterdataInCompany',
-            exclude: ['deviceid'],
+            exclude: ['id'],
             optional: ['companyid']
           }),
         },
       },
-    }) flowmeterdata: Omit<Flowmeterdata, 'deviceid'>,
+    }) flowmeterdata: Omit<Flowmeterdata, 'id'>,
   ): Promise<Flowmeterdata> {
     return this.companyRepository.flowmeterdata(id).create(flowmeterdata);
   }
@@ -106,5 +84,5 @@ export class CompanyFlowmeterdataController {
     @param.query.object('where', getWhereSchemaFor(Flowmeterdata)) where?: Where<Flowmeterdata>,
   ): Promise<Count> {
     return this.companyRepository.flowmeterdata(id).delete(where);
-  }
+  } */
 }

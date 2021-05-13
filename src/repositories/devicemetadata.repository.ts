@@ -1,22 +1,16 @@
-import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor} from '@loopback/repository';
+import {inject} from '@loopback/core';
+import {DefaultCrudRepository} from '@loopback/repository';
 import {PostgresdbDataSource} from '../datasources';
-import {Devicemetadata, DevicemetadataRelations, Company} from '../models';
-import {CompanyRepository} from './company.repository';
+import {Devicemetadata, DevicemetadataRelations} from '../models';
 
 export class DevicemetadataRepository extends DefaultCrudRepository<
   Devicemetadata,
   typeof Devicemetadata.prototype.deviceid,
   DevicemetadataRelations
 > {
-
-  public readonly companyId: BelongsToAccessor<Company, typeof Devicemetadata.prototype.deviceid>;
-
   constructor(
-    @inject('datasources.postgresdb') dataSource: PostgresdbDataSource, @repository.getter('CompanyRepository') protected companyRepositoryGetter: Getter<CompanyRepository>,
+    @inject('datasources.postgresdb') dataSource: PostgresdbDataSource,
   ) {
     super(Devicemetadata, dataSource);
-    this.companyId = this.createBelongsToAccessorFor('companyId', companyRepositoryGetter,);
-    this.registerInclusionResolver('companyId', this.companyId.inclusionResolver);
   }
 }

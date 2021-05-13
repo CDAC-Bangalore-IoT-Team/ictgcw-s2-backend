@@ -7,7 +7,7 @@ import {
   toJSON,
 } from '@loopback/testlab';
 import {IctgcwS2BackendApplication} from '../..';
-import {Company} from '../../models';
+import {Company, Devicemetadata} from '../../models';
 import {CompanyRepository} from '../../repositories';
 import {givenCompany} from './helpers';
 import {token} from './user.acceptance';
@@ -80,7 +80,6 @@ describe('Company Details', () => {
     expect(result).to.containDeep(company);
   });
 
-
   // Single Company Item dealing
 
   context('when dealing with a single persisted company', () => {
@@ -113,10 +112,8 @@ describe('Company Details', () => {
     });
 
     //get all companies
-    it('fails when no bearer token', async () => {
-      await client
-        .get('/get/companies')
-        .expect(401);
+    it('get companies - fails when no bearer token', async () => {
+      await client.get('/get/companies').expect(401);
     });
 
     it('gets all the companies', () => {
@@ -127,8 +124,66 @@ describe('Company Details', () => {
         .expect(200, [toJSON(persistedCompany)]);
     });
 
+    //get all companies
+    it('get companies - fails when no bearer token', async () => {
+      await client.get('/get/companies').expect(401);
+    });
+
+    it('gets all the companies', () => {
+      return client
+        .get(`/get/companies`)
+        .set('Authorization', 'Bearer ' + token)
+        .send()
+        .expect(200, [toJSON(persistedCompany)]);
+    });
+
+    //get device metadata from companyid
+    it('get device metadata from companyid - fails when no bearer token', async () => {
+      await client
+        .get('/get/company/${persistedCompany.companyid}/devicemetadata')
+        .expect(401);
+    });
+
+    it('get device metadata from companyid', () => {
+      return client
+        .get(`/get/company/${persistedCompany.companyid}/devicemetadata`)
+        .set('Authorization', 'Bearer ' + token)
+        .send()
+        .expect(200);
+    });
+
+    /* //get sensor data from companyid
+    it('get sensor data from companyid - fails when no bearer token', async () => {
+      await client
+        .get('/get/company/${persistedCompany.companyid}/sensordata')
+        .expect(401);
+    });
+
+    it('get sensor data from companyid', () => {
+      return client
+        .get(`/get/company/${persistedCompany.companyid}/sensordata`)
+        .set('Authorization', 'Bearer ' + token)
+        .send()
+        .expect(200);
+    });
+
+    //get flowmeter data from companyid
+    it('get flowmeter data from companyid - fails when no bearer token', async () => {
+      await client
+        .get('/get/company/${persistedCompany.companyid}/flowmeterdata')
+        .expect(401);
+    });
+
+    it('get flowmeter data from companyid', () => {
+      return client
+        .get(`/get/company/${persistedCompany.companyid}/flowmeterdata`)
+        .set('Authorization', 'Bearer ' + token)
+        .send()
+        .expect(200);
+    }); */
+
     //update company
-    it('fails when no bearer token', async () => {
+    it('edit company - fails when no bearer token', async () => {
       await client
         .patch(`/edit/company/${persistedCompany.companyid}`)
         .expect(401);
@@ -156,7 +211,7 @@ describe('Company Details', () => {
     });
 
     //get metadata for a company
-    it('fails when no bearer token', async () => {
+    it('get company by id - fails when no bearer token', async () => {
       await client
         .get(`/get/company/${persistedCompany.companyid}/devicemetadata`)
         .expect(401);
@@ -171,7 +226,7 @@ describe('Company Details', () => {
       expect(result).to.containEql(updatedTodo);
     }); */
 
-    it('returns 404 when updating a todo that does not exist', () => {
+    it('returns 404 when updating a company that does not exist', () => {
       return client
         .patch('/get/company/${persistedCompany.companyid}/devicemetadata')
         .set('Authorization', 'Bearer ' + token)
@@ -179,7 +234,7 @@ describe('Company Details', () => {
     });
 
     // Delete
-    it('fails when no bearer token', async () => {
+    it('delete company - fails when no bearer token', async () => {
       await client
         .del('/del/company/${persistedCompany.companyid}')
         .expect(401);
@@ -196,7 +251,7 @@ describe('Company Details', () => {
       ).to.be.rejectedWith(EntityNotFoundError);
     });
 
-    it('returns 404 when deleting a todo that does not exist', async () => {
+    it('returns 404 when deleting a company that does not exist', async () => {
       await client
         .del(`/del/company/99999`)
         .set('Authorization', 'Bearer ' + token)

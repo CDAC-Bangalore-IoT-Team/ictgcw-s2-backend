@@ -38,21 +38,6 @@ describe('Device Meta data', () => {
     await client.post('/insert/devicemetadata').expect(401);
   });
 
-  it('creates a device meta data', async function () {
-    const devicemetadata = givenDevicemetadata();
-    const response = await client
-      .post('/insert/devicemetadata')
-      .set('Authorization', 'Bearer ' + token)
-      .send(devicemetadata)
-      .expect(200, toJSON(devicemetadata));
-    const result = await devicemetadatarepo.findById(response.body.deviceid);
-    result.dateofinstallation = result.dateofinstallation;
-    /*
-    TODO: clean logic
-    */
-    expect(result.commtnmodule).to.equal(devicemetadata.commtnmodule);
-  });
-
   it('rejects requests to create a device meta data with no deviceid', async function () {
     const devicemetadata: Partial<Devicemetadata> = givenDevicemetadata();
     delete devicemetadata.deviceid;
@@ -205,7 +190,7 @@ describe('Device Meta data', () => {
 
   it('rejects requests to create a device meta data with wrong companyid', async function () {
     const devicemetadata: Partial<Devicemetadata> = new Devicemetadata({
-      deviceid: 'pr111',
+      deviceid: 'pr123',
       devicetype: 'pr',
       lattitude: '12.1234567',
       longitude: '77.456789',
@@ -228,6 +213,20 @@ describe('Device Meta data', () => {
       .expect(500);
   });
 
+  it('creates a device meta data', async function () {
+    const devicemetadata = givenDevicemetadata();
+    const response = await client
+      .post('/insert/devicemetadata')
+      .set('Authorization', 'Bearer ' + token)
+      .send(devicemetadata)
+      .expect(200, toJSON(devicemetadata));
+    const result = await devicemetadatarepo.findById(response.body.deviceid);
+    result.dateofinstallation = devicemetadata.dateofinstallation;
+    /*
+    TODO: clean logic
+    */
+    expect(result.commtnmodule).to.equal(devicemetadata.commtnmodule);
+  });
   // Single Device metadata Item dealing
 
   context('when dealing with a single persisted device metadata', () => {
@@ -238,7 +237,7 @@ describe('Device Meta data', () => {
     });
 
     //get device meta data through deviceid and companyid
-    it('fails when no bearer token', async () => {
+    it('get device meta data by id - fails when no bearer token', async () => {
       await client
         .get('/get/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
@@ -260,7 +259,7 @@ describe('Device Meta data', () => {
     });
 
     //update device meta data through deviceid
-    it('fails when no bearer token', async () => {
+    it('update device meta data - fails when no bearer token', async () => {
       await client
         .patch('/update/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
@@ -289,7 +288,7 @@ describe('Device Meta data', () => {
     });
 
     //replace device meta data by deviceid
-    it('fails when no bearer token', async () => {
+    it('replace device meta data by id - fails when no bearer token', async () => {
       await client
         .put('/replace/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
@@ -297,7 +296,7 @@ describe('Device Meta data', () => {
 
     it('replaces the device meta data by device id', async () => {
       const updatedDevicemetadata = givenDevicemetadata({
-        deviceid: 'pr111',
+        deviceid: 'pr123',
         devicetype: 'pr',
         lattitude: '12.1234567',
         longitude: '77.456789',
@@ -337,7 +336,7 @@ describe('Device Meta data', () => {
     });
 
     //delete device meta data by id
-    it('fails when no bearer token', async () => {
+    it('delete device meta data by id - fails when no bearer token', async () => {
       await client
         .del('/del/devicemetadata/${persistedDevicemetadata.deviceid}')
         .expect(401);
@@ -354,7 +353,7 @@ describe('Device Meta data', () => {
       ).to.be.rejectedWith(EntityNotFoundError);
     });
 
-    it('returns 404 when getting a device meta data that does not exist', () => {
+    it('returns 404 when deleting a device meta data that does not exist', () => {
       return client
         .del('/del/devicemetadata/asdfgh')
         .set('Authorization', 'Bearer ' + token)

@@ -11,9 +11,7 @@ import {model, property, repository} from '@loopback/repository';
 import {
   get,
   getModelSchemaRef,
-  HttpErrors,
   post,
-  put,
   requestBody,
   SchemaObject,
 } from '@loopback/rest';

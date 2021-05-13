@@ -1,9 +1,6 @@
-import {Client} from '@loopback/testlab';
-import {IctgcwS2BackendApplication} from '../..';
-import {setupApplication} from './test-helper';
 
 describe('PingController', () => {
-  let app: IctgcwS2BackendApplication;
+  /* let app: IctgcwS2BackendApplication;
   let client: Client;
 
   before('setupApplication', async () => {
@@ -12,7 +9,7 @@ describe('PingController', () => {
 
   after(async () => {
     await app.stop();
-  });
+  }); */
 
  /*  it('invokes GET /ping', async () => {
     const res = await client.get('/ping?msg=world').expect(200);

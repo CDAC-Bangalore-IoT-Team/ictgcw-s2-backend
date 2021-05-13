@@ -1,4 +1,4 @@
-import {Count, CountSchema, Filter, FilterExcludingWhere, repository, Where} from '@loopback/repository';
+import {FilterExcludingWhere, repository} from '@loopback/repository';
 import {
   post,
   param,
@@ -7,17 +7,13 @@ import {
   patch,
   del,
   requestBody,
-  SchemaObject,
   put,
-  response,
-  tags,
 } from '@loopback/rest';
 import {Devicemetadata} from '../models/devicemetadata.model';
 import {DevicemetadataRepository} from '../repositories/devicemetadata.repository';
 import {authenticate} from '@loopback/authentication';
-import {Company} from '../models';
 
-const devicemetadataidschema: SchemaObject = {
+/* const devicemetadataidschema: SchemaObject = {
   type: 'object',
   required: ['deviceid'],
   properties: {
@@ -25,7 +21,7 @@ const devicemetadataidschema: SchemaObject = {
       type: 'string',
     },
   },
-};
+}; */
 
 @authenticate('jwt')
 export class DevicemetadataController {
@@ -206,9 +202,7 @@ export class DevicemetadataController {
     await this.devicemetadataRepository.replaceById(id, devicemetadata);
   }
 
-  
-
- /*  @get('/devicemetadata/{id}/company', {
+  /*  @get('/devicemetadata/{id}/company', {
     tags: ['Device metadata'],
     summary:
       'Get Company belonging to Devicemetadata from device metadata deviceid',
@@ -241,7 +235,7 @@ export class DevicemetadataController {
     return this.devicemetadataRepository.count(where);
   }*/
 
- /*  @get('/devicemetadata')
+  /*  @get('/devicemetadata')
   @tags('Device meta data')
   @response(200, {
     description: 'Array of Devicemetadata model instances',
@@ -296,5 +290,4 @@ export class DevicemetadataController {
   ): Promise<Devicemetadata> {
     return this.devicemetadataRepository.findById(id, filter);
   }*/
-
 }

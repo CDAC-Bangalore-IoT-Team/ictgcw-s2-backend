@@ -1,28 +1,6 @@
-import {
-  Count,
-  CountSchema,
-  Filter,
-  repository,
-  Where,
-} from '@loopback/repository';
-import {
-  del,
-  get,
-  getModelSchemaRef,
-  getWhereSchemaFor,
-  param,
-  patch,
-  post,
-  requestBody,
-} from '@loopback/rest';
-import {
-  Company,
-  Sensordata,
-} from '../models';
-import {CompanyRepository} from '../repositories';
 
 export class CompanySensordataController {
-  constructor(
+  /* constructor(
     @repository(CompanyRepository) protected companyRepository: CompanyRepository,
   ) { }
 
@@ -60,12 +38,12 @@ export class CompanySensordataController {
         'application/json': {
           schema: getModelSchemaRef(Sensordata, {
             title: 'NewSensordataInCompany',
-            exclude: ['deviceid'],
+            exclude: ['id'],
             optional: ['companyid']
           }),
         },
       },
-    }) sensordata: Omit<Sensordata, 'deviceid'>,
+    }) sensordata: Omit<Sensordata, 'id'>,
   ): Promise<Sensordata> {
     return this.companyRepository.sensordata(id).create(sensordata);
   }
@@ -106,5 +84,5 @@ export class CompanySensordataController {
     @param.query.object('where', getWhereSchemaFor(Sensordata)) where?: Where<Sensordata>,
   ): Promise<Count> {
     return this.companyRepository.sensordata(id).delete(where);
-  }
+  } */
 }
