@@ -23,6 +23,18 @@ export function givenCompany(company?: Partial<Company>) {
   return new Company(data);
 }
 
+export function givenSingleCompany(company?: Partial<Company>) {
+  const data = Object.assign(
+    {
+      companyid: 'test456',
+      companyname: 'test456',
+      companyaddress: 'testloc',
+    },
+    company,
+  );
+  return new Company(data);
+}
+
 /**
  * Generate a complete object for use with tests.
  * @param devicemetadata - A partial (or complete) Todo object.

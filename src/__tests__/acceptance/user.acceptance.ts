@@ -14,7 +14,7 @@ describe('User Management', () => {
   let app: IctgcwS2BackendApplication;
   // let token: string;
 
-  /* const testUserCredential = {
+  const testUserCredential = {
     fullname: 'Utkarsh Mankad',
     username: 'utkarshmankad',
     emailid: 'utkarsh.mankad4@cdac.in',
@@ -22,7 +22,7 @@ describe('User Management', () => {
     companyname: 'cdac',
     companyaddress: 'ecity',
     password: 'password123',
-  }; */
+  };
 
   const loginUserCredentials = {
     emailid: 'utkarsh.mankad4@cdac.in',
@@ -43,9 +43,9 @@ describe('User Management', () => {
     await client.get('/getuser').expect(401);
   });
 
-  /* it('sign up successfully', async () => {
+  it('sign up successfully', async () => {
     await client.post('/signup').send(testUserCredential).expect(200);
-  }); */
+  });
 
   it('user login successfully', async () => {
     const res = await client

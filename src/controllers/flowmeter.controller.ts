@@ -1,4 +1,4 @@
-import {Filter, FilterExcludingWhere, repository} from '@loopback/repository';
+import {Filter, repository} from '@loopback/repository';
 import {
   post,
   getModelSchemaRef,

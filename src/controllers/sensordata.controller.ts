@@ -1,4 +1,4 @@
-import {Filter, FilterExcludingWhere, repository} from '@loopback/repository';
+import {Filter, repository} from '@loopback/repository';
 import {
   post,
   param,
@@ -6,12 +6,10 @@ import {
   getModelSchemaRef,
   requestBody,
   api,
-  response,
 } from '@loopback/rest';
 import {Sensordata} from '../models/sensordata.model';
 import {authenticate} from '@loopback/authentication';
 import {SensordataRepository} from '../repositories/sensordata.repository';
-import {Company} from '../models';
 
 @api({
   components: {},

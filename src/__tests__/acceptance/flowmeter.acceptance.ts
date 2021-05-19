@@ -33,10 +33,10 @@ describe('Flow meter data', () => {
     client = createRestAppClient(app);
   });
 
-  beforeEach(async () => {
+  /* beforeEach(async () => {
     await flowmeterdatarepo.deleteAll();
     //await devicemetadatarepo.deleteAll();
-  });
+  }); */
 
   // Insert bfm
   it('insert bfm - fails when no bearer token', async () => {
