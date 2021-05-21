@@ -136,7 +136,7 @@ export class CompanyController {
         description: 'Edited Company model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Company, {includeRelations: true}),
+            schema: getModelSchemaRef(Company, {includeRelations: false}),
           },
         },
       },

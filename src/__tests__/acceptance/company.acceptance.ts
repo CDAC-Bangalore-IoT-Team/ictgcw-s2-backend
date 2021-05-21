@@ -70,7 +70,7 @@ describe('Company Details', () => {
   it('Accepts requests to create a company with no companyaddress', async function () {
     /* const company: Partial<Company> = givenCompany();
     delete company.companyaddress; */
-    
+
     const response = await client
       .post('/insert/company')
       .set('Authorization', 'Bearer ' + token)
@@ -125,7 +125,7 @@ describe('Company Details', () => {
         .set('Authorization', 'Bearer ' + token)
         .send()
         .expect(200);
-      console.log(response.body)
+      console.log(response.body);
     });
 
     //get all companies
@@ -154,6 +154,13 @@ describe('Company Details', () => {
         .set('Authorization', 'Bearer ' + token)
         .send()
         .expect(200);
+    });
+
+    it('returns 404 when getting device metadat of a company that does not exist', () => {
+      return client
+        .patch('/get/company/${persistedCompany.companyid}/devicemetadata')
+        .set('Authorization', 'Bearer ' + token)
+        .expect(404);
     });
 
     /* //get sensor data from companyid
@@ -193,50 +200,43 @@ describe('Company Details', () => {
         .expect(401);
     });
 
-    /* it('updates the company by ID ', async () => {
-      const updatedTodo = givenSingleCompany({
+    it('updates the company by ID ', async () => {
+      /*  const updatedTodo = givenSingleCompany({
         companyname: 'test789',
-      });
-      const resp = await client
-        .patch(`/edit/company/${persistedCompany.companyid}`)
+      }); */
+      // Insert first
+      const response = await client
+        .post('/insert/company')
         .set('Authorization', 'Bearer ' + token)
-        .send(updatedTodo)
+        .send({
+          companyid: 'test786',
+          companyname: 'test786',
+          companyaddress: 'testloc',
+        })
+        .expect(200);
+      
+      // Update company by id
+      const resp = await client
+        .patch(`/edit/company/test786`)
+        .set('Authorization', 'Bearer ' + token)
+        .send({
+          companyid: 'test786',
+          companyname: 'test678',
+          companyaddress: 'testloc1',
+        })
         .expect(204);
       const result = await comapnyrepo.findById(persistedCompany.companyid);
-      expect(result).to.containEql(updatedTodo);
       console.log(resp.body);
-    }); */
+    });
 
-    it('returns 404 when updating a todo that does not exist', () => {
+    it('returns 404 when updating a company that does not exist', () => {
       return client
         .patch('/edit/company/99999')
         .set('Authorization', 'Bearer ' + token)
         .send(givenCompany({companyname: 'test321'}))
         .expect(404);
     });
-
-    //get metadata for a company
-    it('get company by id - fails when no bearer token', async () => {
-      await client
-        .get(`/get/company/${persistedCompany.companyid}/devicemetadata`)
-        .expect(401);
-    });
-
-    /* it('get device metadata from a companyid', async () => {
-     await client
-        .patch(`/get/company/${persistedCompany.companyid}/devicemetadata`)
-        .set('Authorization', 'Bearer ' + token)
-        .expect(204);
-      const result = await comapnyrepo.findById(persistedCompany.companyid);
-      expect(result).to.containEql(updatedTodo);
-    }); */
-
-    it('returns 404 when updating a company that does not exist', () => {
-      return client
-        .patch('/get/company/${persistedCompany.companyid}/devicemetadata')
-        .set('Authorization', 'Bearer ' + token)
-        .expect(404);
-    });
+    
 
     // Delete
     it('delete company - fails when no bearer token', async () => {

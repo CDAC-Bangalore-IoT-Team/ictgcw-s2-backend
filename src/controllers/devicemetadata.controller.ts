@@ -89,7 +89,7 @@ export class DevicemetadataController {
         description: 'Devicemetadata model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Devicemetadata, {includeRelations: true}),
+            schema: getModelSchemaRef(Devicemetadata, {includeRelations: false}),
           },
         },
       },
@@ -177,7 +177,7 @@ export class DevicemetadataController {
     await this.devicemetadataRepository.deleteById(id);
   }
 
-  @put('/replace/devicemetadata/{id}', {
+  /* @put('/replace/devicemetadata/{id}', {
     tags: ['Device metadata'],
     summary: 'Replace device metadata from the system, through device ID',
     responses: {
@@ -200,7 +200,7 @@ export class DevicemetadataController {
     @requestBody() devicemetadata: Devicemetadata,
   ): Promise<void> {
     await this.devicemetadataRepository.replaceById(id, devicemetadata);
-  }
+  } */
 
   /*  @get('/devicemetadata/{id}/company', {
     tags: ['Device metadata'],

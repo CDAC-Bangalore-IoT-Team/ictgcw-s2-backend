@@ -443,7 +443,7 @@ export class SensordataController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Sensordata, {includeRelations: true}),
+              items: getModelSchemaRef(Sensordata, {includeRelations: false}),
             },
           },
         },

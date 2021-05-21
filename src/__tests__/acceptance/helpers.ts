@@ -42,7 +42,7 @@ export function givenSingleCompany(company?: Partial<Company>) {
 export function givenDevicemetadata(devicemetadata?: Partial<Devicemetadata>) {
   const data = Object.assign(
     {
-      deviceid: 'pr123',
+      deviceid: 'pr111',
       devicetype: 'pr',
       lattitude: '12.1234567',
       longitude: '77.456789',

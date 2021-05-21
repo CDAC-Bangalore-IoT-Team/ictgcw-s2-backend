@@ -39,9 +39,9 @@ describe('User Management', () => {
     ({app, client} = await setupApplication());
   }
 
-  it('fails when getting user without login', async () => {
+  /* it('fails when getting user without login', async () => {
     await client.get('/getuser').expect(401);
-  });
+  }); */
 
   it('sign up successfully', async () => {
     await client.post('/signup').send(testUserCredential).expect(200);

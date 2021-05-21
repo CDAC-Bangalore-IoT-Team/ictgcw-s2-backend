@@ -17,8 +17,8 @@ import {
 } from '@loopback/rest';
 import {genSalt, hash} from 'bcryptjs';
 import _ from 'lodash';
-import { User } from '../models';
-import { UserRepository } from '../repositories';
+import {User} from '../models';
+import {UserRepository} from '../repositories';
 
 @model()
 export class NewUserRequest extends User {
@@ -83,6 +83,15 @@ export class UserController {
           },
         },
       },
+      '400': {
+        description: 'Not allowable input',
+      },
+      '404': {
+        description: 'Page not found',
+      },
+      '500': {
+        description: 'Server error',
+      },
     },
   })
   async login(
@@ -98,7 +107,7 @@ export class UserController {
     return {token};
   }
 
-  @authenticate('jwt')
+  /*  @authenticate('jwt')
   @get('/getuser', {
     tags: ['User'],
     summary: 'Gets the current user',
@@ -121,7 +130,7 @@ export class UserController {
     currentUserProfile: UserProfile,
   ): Promise<string> {
     return currentUserProfile[securityId];
-  }
+  } */
 
   @post('/signup', {
     tags: ['User'],

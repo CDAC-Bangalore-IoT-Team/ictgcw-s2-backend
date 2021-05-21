@@ -121,7 +121,7 @@ export class FlowmeterController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Flowmeterdata, {includeRelations: true}),
+              items: getModelSchemaRef(Flowmeterdata, {includeRelations: false}),
             },
           },
         },
