@@ -461,7 +461,7 @@ export class SensordataController {
   })
   async find(
     @param.path.string('deviceid') deviceid: string,
-    @param.filter(Sensordata) filter?: Filter<Sensordata>,
+   /*  @param.filter(Sensordata) filter?: Filter<Sensordata>, */
   ): Promise<Sensordata[]> {
     return this.sensordataRepository.find({where: {deviceid: deviceid}});
   }

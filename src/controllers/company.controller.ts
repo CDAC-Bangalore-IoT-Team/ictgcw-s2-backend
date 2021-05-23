@@ -75,7 +75,7 @@ export class CompanyController {
           'application/json': {
             schema: {
               type: 'array',
-              items: getModelSchemaRef(Company, {includeRelations: true}),
+              items: getModelSchemaRef(Company/* , {includeRelations: true} */),
             },
           },
         },
@@ -92,9 +92,9 @@ export class CompanyController {
     },
   })
   async find(
-    @param.filter(Company) filter?: Filter<Company>,
+    //@param.filter(Company) filter?: Filter<Company>,
   ): Promise<Company[]> {
-    return this.companyRepository.find(filter);
+    return this.companyRepository.find();
   }
 
   @get('/get/company/{id}', {
@@ -105,7 +105,7 @@ export class CompanyController {
         description: 'Company model instance',
         content: {
           'application/json': {
-            schema: getModelSchemaRef(Company, {includeRelations: true}),
+            schema: getModelSchemaRef(Company/* , {includeRelations: true} */),
           },
         },
       },
@@ -122,10 +122,10 @@ export class CompanyController {
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Company, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Company>,
+   /*  @param.filter(Company, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Company>, */
   ): Promise<Company> {
-    return this.companyRepository.findById(id, filter);
+    return this.companyRepository.findById(id);
   }
 
   @patch('/edit/company/{id}', {
@@ -190,9 +190,10 @@ export class CompanyController {
   })
   async getAllDevicemetadataOfaCompany(
     @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Devicemetadata>,
+    /* @param.query.object('filter') filter?: Filter<Devicemetadata>, */
   ): Promise<Devicemetadata[]> {
-    return this.companyRepository.devicemetadata(id).find(filter);
+    //return this.companyRepository.devicemetadata(id).find(filter);
+    return this.companyRepository.devicemetadata(id).find();
   }
 
   /* @get('/get/company/{id}/flowmeterdata', {

@@ -139,7 +139,7 @@ export class FlowmeterController {
   })
   async find(
     @param.path.string('deviceid') deviceid: string,
-    @param.filter(Flowmeterdata) filter?: Filter<Flowmeterdata>,
+    /* @param.filter(Flowmeterdata) filter?: Filter<Flowmeterdata>, */
   ): Promise<Flowmeterdata[]> {
     return this.flowmeterdataRepository.find({where: {deviceid: deviceid}});
   }

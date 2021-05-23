@@ -32,6 +32,9 @@ export class Sensordata extends Entity {
   @property({
     type: 'date',
     required: true,
+    index: {
+      unique: true,
+    },
   })
   datetime: string;
 

@@ -80,7 +80,7 @@ export class DevicemetadataController {
    * @param deviceid
    * @returns devicemetadata
    */
-  @get('/get/devicemetadata/{id}', {
+  @get('/get/devicemetadata/{deviceid}', {
     tags: ['Device metadata'],
     summary: 'Get device metadata from the system, through device ID',
     description: '',
@@ -105,11 +105,11 @@ export class DevicemetadataController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
-    @param.filter(Devicemetadata, {exclude: 'where'})
-    filter?: FilterExcludingWhere<Devicemetadata>,
+    @param.path.string('deviceid') id: string,
+   /*  @param.filter(Devicemetadata, {exclude: 'where'})
+    filter?: FilterExcludingWhere<Devicemetadata>, */
   ): Promise<Devicemetadata> {
-    return this.devicemetadataRepository.findById(id, filter);
+    return this.devicemetadataRepository.findById(id);
   }
 
   /**
@@ -155,7 +155,7 @@ export class DevicemetadataController {
    * @param deviceid
    * @returns SUCCESS/FAILURE response
    */
-  @del('/del/devicemetadata/{id}', {
+  /* @del('/del/devicemetadata/{id}', {
     tags: ['Device metadata'],
     summary: 'Delete device metadata from the system, through device ID',
     responses: {
@@ -175,7 +175,7 @@ export class DevicemetadataController {
   })
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.devicemetadataRepository.deleteById(id);
-  }
+  } */
 
   /* @put('/replace/devicemetadata/{id}', {
     tags: ['Device metadata'],

@@ -57,7 +57,7 @@ export class User extends Entity {
   @hasOne(() => UserCredentials)
   userCredentials: UserCredentials;
 
-  [prop: string]: any;
+  //[prop: string]: any;
 
   constructor(data?: Partial<User>) {
     super(data);

@@ -46,6 +46,9 @@ export class Flowmeterdata extends Entity {
   @property({
     type: 'date',
     required: true,
+    index: {
+      unique: true,
+    }
   })
   datetime: string;
 
