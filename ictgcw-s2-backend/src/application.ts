@@ -16,10 +16,12 @@ import {
   UserServiceBindings,
   MyUserService,
   SECURITY_SCHEME_SPEC,
+  JWTAuthenticationComponent,
 } from '@loopback/authentication-jwt';
 import {PasswordHasherBindings} from './keys';
 import {BcryptHasher} from './services';
 import {SECURITY_SPEC} from './utils/security-spec';
+import {AuthenticationComponent} from '@loopback/authentication';
 
 export {ApplicationConfig};
 
@@ -68,6 +70,10 @@ export class IctgcwS2BackendApplication extends BootMixin(
   private setUpBindings(): void {
     // Bind package.json to the application context
     // this.bind(PackageKey).to(pkg);
+    // Mount authentication system
+    this.component(AuthenticationComponent);
+    // Mount jwt component
+    this.component(JWTAuthenticationComponent);
 
     this.bind(TokenServiceBindings.TOKEN_SECRET).to(
       TokenServiceConstants.TOKEN_SECRET_VALUE,
